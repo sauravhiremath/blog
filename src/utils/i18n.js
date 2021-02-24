@@ -68,16 +68,3 @@ export const createLanguageLink = (slug, lang) => {
   return targetLang =>
     targetLang === 'en' ? rawSlug : `/${targetLang}${rawSlug}`;
 };
-
-export const replaceAnchorLinksByLanguage = (html, code) => {
-  // Match any link using https://regexr.com/4airl
-  const matches = html.match(/https?:\/\/(www)?[^\/\s)"?]+/gm);
-
-  // Return same html if no matches were found
-  // or code isn't supported
-  if (!matches || !supportedLanguages[code]) {
-    return html;
-  }
-
-  return html;
-};
