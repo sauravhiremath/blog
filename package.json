@@ -44,6 +44,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
+    "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.22.0",
@@ -62,7 +63,8 @@
     "build": "rm -rf public && rm -rf .cache && gatsby build",
     "now-build": "gatsby build",
     "deploy": "yarn build && cp now.json public/ && cd public && now alias $(now) blog.sauravmh.com",
-    "dry": "yarn build && cp now.json public/ && cd public && now"
+    "dry": "yarn build && cp now.json public/ && cd public && now",
+    "gist-to-code": "node src/utils/gist-to-code"
   },
   "husky": {
     "hooks": {
@@ -75,6 +77,7 @@
       "git add"
     ],
     "src/pages/**/*.md": [
+      "yarn run gist-to-code",
       "git add"
     ]
   },

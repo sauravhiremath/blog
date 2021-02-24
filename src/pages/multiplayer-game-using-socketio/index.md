@@ -99,7 +99,26 @@ We will focus more on **subdirectory socker/**. This the place where your core s
 
 ### The entry point for socket.io (App.js)
 
-{% gist https://gist.github.com/sauravhiremath/1fd09ca1e404571d32f510759f3d7060 %}
+```js
+import { socker } from './socker';
+import express from 'express';
+import http from 'http';
+import { API_PORT, host } from './env';
+
+const app = express();
+const server = new http.Server(app);
+socker(server);
+
+app.listen(API_PORT, () => {
+  logger.info(`Api listening on port ${Number(API_PORT)}!`);
+});
+
+server.listen(Number(API_PORT) + 1, () => {
+  logger.info(`Socker listening on port ${Number(API_PORT) + 1}!`);
+  logger.info(`Api and socker whitelisted for ${host}`);
+});
+
+```
 
 Here two servers are created, `app` — listening to HTTP requests and `server` — listening to WebSockets connections. It is recommended to keep them connected to different PORTs to avoid confusion.
 
@@ -109,7 +128,20 @@ You might be wondering what is "socker" on line 1 and 8.
 
 Socker is just a function alias (because I am building a football draft game here, duh!). This function attaches the `Server` (passed in line 8 of app.js) to an engine.io instance on a new `http.Server`. In simple words, it attaches the socket.io engine to the server passed to it.
 
-{% gist https://gist.github.com/sauravhiremath/1cfd1e3e7c724ff1b899670667f370ae %}
+```js
+import socketio from 'socket.io';
+
+export default server => {
+  const io = socketio.listen(server, {...options});
+
+  io.on('connection', socket => {
+    logger.info('Client Connected');
+  });
+
+  return io;
+};
+
+```
 
 But the above code doesn't explain much. Now, the following questions arise:
 
@@ -128,13 +160,64 @@ Within each namespace, you can create arbitrary channels or rooms. This further 
 
 _Example of joining a room_
 
-{% gist https://gist.github.com/sauravhiremath/ca0e0d4bc1ba6a644a59b6276c25c392 %}
+```js
+import socketio from 'socket.io';
+
+const io = socketio.listen(app);
+
+const roomId = '#8BHJL'
+
+io.on('connection', async socket => {
+  // join() allows to join a room/channel
+  // Here, `await` is used; as socketio join operation uses mix of async and sync operations
+  await socket.join(roomId);
+  
+  logger.info('Client Connected');
+});
+
+```
 
 The `join()` operation checks if the required `roomId` is already created. If not, then it creates the room and adds the player to the given roomId. And if it is already created it joins the room directly.
 
 _A wholesome example summarizing the use of namespaces and channels:_
 
-{% gist https://gist.github.com/sauravhiremath/fabd144ae562eebf45a1594d75a400b6 %}
+```js
+import socketio from 'socket.io';
+import Room from './roomManager';
+
+export default server => {
+  const io = socketio.listen(server, {
+    path: '/classic-mode',
+  });
+
+  logger.info('Started listening!');
+  
+  // Creating a new namespace
+  const classicMode = io.of('/classic-mode');
+  
+  classicMode.on('connection', async socket => {
+    // Receive parameters passed from socket client
+    const { username, roomId, password, action } = socket.handshake.query;
+    
+    // Initilaise a the room for connecting socket
+    const room = new Room({ io: classicMode, socket, username, roomId, password, action });
+
+    const joinedRoom = await room.init(username);
+    logger.info('Client Connected');
+    
+    // Listeners opened by server
+    if (joinedRoom) {
+        room.showPlayers();
+        room.isReady();
+        room.shiftTurn();
+    }
+
+    room.onDisconnect();
+  });
+
+  return io;
+};
+```
 
 That's it for Part I. The code structure shown here works for medium size projects quite well. If you are building a quick prototype, you may omit or combine the schema and models folder. Do not hesitate to make the project lighter if required :)
 
