@@ -33,7 +33,6 @@ exports.createPages = ({ graphql, actions }) => {
                     slug
                     langKey
                     directoryName
-                    maybeAbsoluteLinks
                   }
                   frontmatter {
                     title
@@ -157,26 +156,6 @@ exports.onCreateNode = ({ node, actions }) => {
       node,
       name: 'directoryName',
       value: path.basename(path.dirname(_.get(node, 'fileAbsolutePath'))),
-    });
-
-    // Capture a list of what looks to be absolute internal links.
-    // We'll later remember which of them have translations,
-    // and use that to render localized internal links when available.
-
-    // TODO: check against links with no trailing slashes
-    // or that already link to translations.
-    const markdown = node.internal.content;
-    let maybeAbsoluteLinks = [];
-    let linkRe = /\]\((\/[^\)]+\/)\)/g;
-    let match = linkRe.exec(markdown);
-    while (match != null) {
-      maybeAbsoluteLinks.push(match[1]);
-      match = linkRe.exec(markdown);
-    }
-    createNodeField({
-      node,
-      name: 'maybeAbsoluteLinks',
-      value: _.uniq(maybeAbsoluteLinks),
     });
   }
 };

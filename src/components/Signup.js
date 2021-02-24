@@ -2,31 +2,17 @@ import React from 'react';
 
 import './Signup.css';
 
-const REACT_COMPONENTS_FORM_ID = '1181861';
-const OVERREACTED_FORM_ID = '812047';
+const SAURAV_BLOG_FORM_ID = '2066490';
 
 class Signup extends React.Component {
   render() {
-    let form,
-      { cta } = this.props;
-    switch (cta) {
-      case 'react':
-        form = {
-          id: REACT_COMPONENTS_FORM_ID,
-          title: 'Learn to Build Resilient React Components',
-          subTitle:
-            'Get a one week email course and learn how I think about writing React components based on 4 Principles.',
-          buttonText: 'Start Learning',
-        };
-        break;
-      default:
-        form = {
-          id: OVERREACTED_FORM_ID,
-          title: 'Subscribe to the Newsletter',
-          subTitle: 'Subscribe to get my latest content by email.',
-          buttonText: 'Subscribe',
-        };
-    }
+    let form = {
+      id: SAURAV_BLOG_FORM_ID,
+      title: 'Learn to use JS the right way',
+      subTitle: 'Get to know about interesting JS, Nodejs and React techniques',
+      buttonText: 'Start Learning',
+    };
+
     return (
       <form
         action={`https://app.convertkit.com/forms/${form.id}/subscriptions`}
@@ -106,6 +92,7 @@ class Signup extends React.Component {
             <div data-element="fields" className="seva-fields formkit-fields">
               <div className="formkit-field">
                 <input
+                  required
                   className="formkit-input"
                   aria-label="Your first name"
                   name="fields[first_name]"
@@ -117,16 +104,15 @@ class Signup extends React.Component {
                     color: 'rgb(0, 0, 0)',
                     fontWeight: 400,
                   }}
-                  required
                 />
               </div>
               <div className="formkit-field">
                 <input
+                  required
                   className="formkit-input"
                   name="email_address"
                   aria-label="Your email address"
                   placeholder="Your email address"
-                  required
                   type="email"
                   style={{
                     borderColor: 'rgb(227, 227, 227)',

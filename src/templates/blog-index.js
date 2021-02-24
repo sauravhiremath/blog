@@ -28,7 +28,7 @@ class BlogIndexTemplate extends React.Component {
             <Panel>
               These articles have been{' '}
               <a
-                href="https://github.com/sauravhiremath/blogs"
+                href="https://github.com/sauravhiremath/blog"
                 target="_blank"
                 rel="noopener noreferrer"
               >
