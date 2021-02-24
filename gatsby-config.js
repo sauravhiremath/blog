@@ -50,6 +50,21 @@ module.exports = {
               target: '_blank',
             },
           },
+          {
+            resolve: 'gatsby-remark-emojis',
+            options: {
+              active: true,
+              class: 'emoji-icon',
+              styles: {
+                display: 'inline',
+                margin: '0',
+                'margin-top': '1px',
+                position: 'relative',
+                top: '2px',
+                width: '30px',
+              },
+            },
+          },
         ],
       },
     },
@@ -120,6 +135,8 @@ module.exports = {
                         title
                         date
                         spoiler
+                        devto
+                        medium
                       }
                     }
                   }
