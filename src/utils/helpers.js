@@ -1,7 +1,8 @@
 export function formatReadingTime(minutes) {
   let cups = Math.round(minutes / 5);
-  let bowls = 0;
-  if (cups > 5) {
+  if (cups > 8) {
+    return `🍲🍲 more than 30 min read`;
+  } else if (cups > 5) {
     return `${new Array(Math.round(cups / Math.E))
       .fill('🍱')
       .join('')} ${minutes} min read`;

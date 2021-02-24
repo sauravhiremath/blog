@@ -1,6 +1,6 @@
 ---
 title: Building multiplayer games using socketio
-date: '2020-07-10'
+date: '2020-07-07'
 spoiler: Finally using socketio in a right way and not for chat bots
 medium: https://medium.com/swlh/socket-io-games-the-right-way-using-nodejs-and-react-not-a-chat-app-part-1-e7a49d2f3f51
 devto: https://dev.to/sauravmh/building-a-multiplayer-game-using-websockets-1n63
