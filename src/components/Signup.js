@@ -9,7 +9,8 @@ class Signup extends React.Component {
     let form = {
       id: SAURAV_BLOG_FORM_ID,
       title: 'Learn to use JS the right way',
-      subTitle: 'Get to know about interesting JS, Nodejs and React techniques',
+      subTitle:
+        'Get to know interesting techniques and projects for JS, Nodejs and React',
       buttonText: 'Start Learning',
     };
 
