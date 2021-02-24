@@ -8,11 +8,11 @@ devto: https://dev.to/sauravmh/browser-game-design-using-websockets-and-deployme
 
 I would definitely recommend you to read the first article before we continue the journey here -
 
-[Nodejs multiplayer games using socketio](https://blog.sauravmh.com/multiplayer-game-using-socketio/) 
+[Nodejs multiplayer games using socketio](https://blog.sauravmh.com/multiplayer-game-using-socketio/)
 
 ## A gist of part 1 of the series:
 
-In the last article, we talked about how to create a browser turn-based multiplayer game using socket.io and NodeJS. 
+In the last article, we talked about how to create a browser turn-based multiplayer game using socket.io and NodeJS.
 
 The topics covered were:
 
@@ -25,17 +25,18 @@ The topics covered were:
 
 We will do system design for generic turn-based games here. Let's proceed with scenarios in order of user interactions.
 
- 1. User enters the homepage
- 2. After the user creates or joins a new room
- 3. Waiting till others arrive before starting the game
- 4. Rotating turns
- 5. Handling player exits in-game
+1.  User enters the homepage
+2.  After the user creates or joins a new room
+3.  Waiting till others arrive before starting the game
+4.  Rotating turns
+5.  Handling player exits in-game
 
 ## :wave: Users enter the homepage
 
 This can be your welcome page. In my case, I have added one previous page reading the username/alias. Here we explain the users the rules of the game and show users a clear option to join or create a new room for them to play.
 
 ### Client Side
+
 ![homepage](./homepage.png)
 
 ### BTS
@@ -44,16 +45,16 @@ You can always refer the whole documented code from my GitHub links provided at 
 
 ```javascript
 if (this.action === 'join') {
-    // @optional Check if correct password for room
-    // Check if room size is equal to or more than 1
-    //     If yes, join the socket to the room
-    //     If not, emit 'invalid operation: room does not exist'
+  // @optional Check if correct password for room
+  // Check if room size is equal to or more than 1
+  //     If yes, join the socket to the room
+  //     If not, emit 'invalid operation: room does not exist'
 }
 
 if (this.action === 'create') {
-    // Check if room size is equal to zero
-    //     If yes, create a new room and join socket to the room
-    //     If not, emit 'invalid operation: room already exists'
+  // Check if room size is equal to zero
+  //     If yes, create a new room and join socket to the room
+  //     If not, emit 'invalid operation: room already exists'
 }
 ```
 
@@ -64,9 +65,9 @@ After a user creates a room or starts a new game, a `gameState` is created for t
 The state can be a simple Javascript object or a table/collection in your database. The reasons you might want to use a database instead of a simple JS object might be:
 
 - You have longer game sessions
-    - Reason: Chances are the server instance that might restart or crash due to some reason. Using a database for the `gameState` management helps you mitigate this problem
+  - Reason: Chances are the server instance that might restart or crash due to some reason. Using a database for the `gameState` management helps you mitigate this problem
 - There are multiple server sessions running
-    - Reason: It is usually a good practice to run multiple instances of your socketio or NodeJS processes when running on scale. You can check out the node cluster module for this. Scaling is explained in detail later :relieved: 
+  - Reason: It is usually a good practice to run multiple instances of your socketio or NodeJS processes when running on scale. You can check out the node cluster module for this. Scaling is explained in detail later :relieved:
 
 Yes, in my case I am storing state in a JS object (Stop attacking me, Jesus!). Well, I didn't think of scale at the start of the project and I'm glad I didn't go down this rabbit hole. But the silver lining is, you can easily plug in a Redis DB when initializing the socketio object. The rest will be handled by the library. But again, we want to take this a few steps further :rocket: I have explained the project scaling in detail later on in this article!
 
@@ -86,9 +87,10 @@ this.store = {
 ## :clock2: Waiting time till everyone is Ready
 
 We just can't start the game when a selected number of users join the game. Users must confirm they are ready, and once every user is ready the game starts.
-*Optional - allow users to unready themselves*
+_Optional - allow users to unready themselves_
 
 ### Client Side
+
 ![client-side](./client-side.png)
 
 ### BTS
@@ -143,13 +145,14 @@ shiftTurn() {
 It is very important to handle player exits inGame. The user may choose to exit using the in-game menu or just close the application or his/her internet connection might just die (poor lad! we all have been there). Under all these circumstances it is important to make sure your application doesn't crash. This may affect other players' games.
 
 For our case we need to:
+
 - Clear all the timeouts inGame
 - Broadcast the last synced list of items for all users in the current room
 - Reset the current `gameState` or continue the game by removing `disconnected-user` from the player queue
 
 # Deploying the application
 
-## CI/CD for React Application
+### CI/CD for React Application
 
 ![vercel-CI/CD](./vercel-ci-cd.png)
 <figcaption> Add your GitHub URL and click to deploy </figcaption>
@@ -172,9 +175,9 @@ It is a web server that can be used as a reverse proxy, load-balancer, mail-serv
 But, for our use case, we will be using Nginx as reverse-proxy. Before you ask,
 
 > A reverse proxy is a server that sits in front of one or more web servers, intercepting requests from clients.
-> 
+>
 > ![reverse-proxy-flow](./reverse-proxy-flow.png)
- 
+
 ## Creating Virtual Hosts
 
 Virtual Hosts are more of an Apache (It's a webserver just like Nginx) Term. Nginx coins this as "server blocks"
@@ -201,7 +204,7 @@ You will see a similar recommended template in Nginx docs too, this one has addi
 │   ├── soc.mydomain.com.conf # Websockets config -> user-config
 │   └── _default.conf
 ├── nginx.conf                    # set a global-default for nginx
-├── mime.types                    # allow-list for mime types 
+├── mime.types                    # allow-list for mime types
 └── ...
 ```
 
@@ -323,15 +326,15 @@ Creates a `301` redirect from the virtual host location, `soc.mydomain.com` in t
 
 - Add SSL certificates location (I use certbot to generate SSL certs, feel free to explore other options). This step is not necessary if you are using Cloudflare, Amazon, or any other edge delivery proxy services, as you can configure the certs from their portal.
 - `proxy_pass`: Point to the server accepting the client requests. In our case, we are running the WebSockets backend on the same server, hence we add a proxy_pass for our localhost connection.
-- `proxy_set_header`: Adding appropriate request headers. 
-    - Here, we set the `Connection "upgrade"` to allow switching protocols from `polling` to `websockets`. This feature is tightly bound to `socket.io`, as they use this feature to support older browsers. You may skip this header if you are using `websockets` directly
-    - `X-Forwarded-Host`: The original host requested by the client in the Host HTTP request header
-    - `X-Forwarded-Server`: The hostname of the proxy server.
-    - `X-Forwarded-For`: Automatically append `$remote_addr` to any incoming `X-Forwarded-For` headers.
-    - `X-Real-IP`: This might be tricky to understand, but bear with me. Assume a user is at IP `A`, the user is behind a proxy `B`. Now the user sends a request to loadbalancer with IP `C`, which routes it to Nginx. After Nginx has processed the request, the requests will have the following headers:
-        - `X-Forwarded-For: [A, B, C]`
-        - `X-Real-IP: B`: Since Nginx will recurse on `X-Forwarded-For` from the end of the array to the start of the array, and find the first untrusted IP.
-    - If `X-Forwarded-For` does not exist in a request, then `$remote_addr` value is used in the `X-Real-IP` header, otherwise, it is overwritten by recursing on the `X-Forwarded-For` header array, taking into consideration set_real_ip_from rule(s).
+- `proxy_set_header`: Adding appropriate request headers.
+  - Here, we set the `Connection "upgrade"` to allow switching protocols from `polling` to `websockets`. This feature is tightly bound to `socket.io`, as they use this feature to support older browsers. You may skip this header if you are using `websockets` directly
+  - `X-Forwarded-Host`: The original host requested by the client in the Host HTTP request header
+  - `X-Forwarded-Server`: The hostname of the proxy server.
+  - `X-Forwarded-For`: Automatically append `$remote_addr` to any incoming `X-Forwarded-For` headers.
+  - `X-Real-IP`: This might be tricky to understand, but bear with me. Assume a user is at IP `A`, the user is behind a proxy `B`. Now the user sends a request to loadbalancer with IP `C`, which routes it to Nginx. After Nginx has processed the request, the requests will have the following headers:
+    - `X-Forwarded-For: [A, B, C]`
+    - `X-Real-IP: B`: Since Nginx will recurse on `X-Forwarded-For` from the end of the array to the start of the array, and find the first untrusted IP.
+  - If `X-Forwarded-For` does not exist in a request, then `$remote_addr` value is used in the `X-Real-IP` header, otherwise, it is overwritten by recursing on the `X-Forwarded-For` header array, taking into consideration set_real_ip_from rule(s).
 
 Now, we have seen how to configure reverse proxies to serve your application over the internet, be it HTTP requests or WebSocket connections. The next important part is how to handle the load and horizontal scaling of your application. Do we even require scaling? If yes, under what specific conditions?
 
@@ -340,12 +343,14 @@ All of the above questions and many others are answered in the below section.
 ## :rocket: Scaling your application
 
 There are basically two kinds of scaling
+
 - Vertical Scaling: Increasing the server capacity to handle and process more requests
 - Horizontal Scaling: Increasing the server instances, to distribute and process more requests
 
 We will be focusing more on horizontal scaling here. More specifically, focusing on scaling NodeJS applications. Even though some methods can be used for scaling other than NodeJS, details for other platform applications are out of the scope of this article.
 
 ![node network-balancing //Credits: https://medium.com/iquii/good-practices-for-high-performance-and-scalable-node-js-applications-part-1-3-bb06b6204197](./node-network-balancing.png)
+
 <figcaption> Network Balancing Overview </figcaption>
 
 ### When do I scale?
@@ -367,6 +372,7 @@ As mentioned, you can use the `node cluster` module. But in this example, we wil
 > PM2 is a daemon process manager that will help you manage and keep your application online
 
 ![pm2-monitoring-screenshot](./pm2-monitoring-screenshot.png)
+
 <figcaption> My pm2 monitoring on server </figcaption>
 
 Apart from being an excellent monitoring tool for your server jobs, there are various abstractions pm2 provides which makes it the go-to manager for deployments.
@@ -375,15 +381,17 @@ It also includes `cluster mode`, which is a clean abstraction built over the `no
 An example use-case would be:
 
 - Create a `deploy_processes.json` file
+
 ```json
 {
-  script    : "server.js",
-  instances : "max",
-  exec_mode : "cluster"
+  "script": "server.js",
+  "instances": "max",
+  "exec_mode": "cluster"
 }
 ```
+
 - Run `pm2 start deploy_processes.json`
-- Run Reload after any changes: `pm2 reload deploy_processes.json`. This allows for reloading with 0-second-downtime, as opposed to `pm2 restart`, which kills and starts the process again. (*This statement is taken from the official docs, I've not made it up*)
+- Run Reload after any changes: `pm2 reload deploy_processes.json`. This allows for reloading with 0-second-downtime, as opposed to `pm2 restart`, which kills and starts the process again. (_This statement is taken from the official docs, I've not made it up_)
 
 Make sure while scaling in general, your application is **StateLess**. Do not store any information in the process or anywhere in runtime. You may use RedisDB (in-memory storage), MongoDB, or any storage of your choice to share states between the processes.
 
