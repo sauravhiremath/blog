@@ -37,7 +37,7 @@ Pretty simple? Yes/no, it doesn’t matter. We will see the detailed breakdown o
 
 ## Server Architecture ⚡⚡⚡
 
-![Game-architecture](https://miro.medium.com/max/1400/1*QEqiWlUQaaJ1DsjEUhN4dA.png)
+![Game-architecture](./game-architecture.png)
 
 ## Game architecture
 The above diagram explains how everything is connected from a birds-eye point of view.
@@ -225,7 +225,7 @@ What if the project size increases? The current structure might not work well. Y
 
 Remember do not over-engineer your product, build and deploy in stages!
 
-> ![joke](https://miro.medium.com/max/1024/1*dvu_gRGO5U77rknVdIjT2w.jpeg)
+> ![joke](./joke.jpeg)
 
 Be it a joke or an engineering-project, no one likes overdoing it :)
 
