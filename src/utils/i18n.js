@@ -1,5 +1,4 @@
 import { supportedLanguages } from './../../i18n';
-import whitelist from './whitelist';
 
 // This is kind of a mess for some languages.
 // Try to be as short as possible.
@@ -79,14 +78,6 @@ export const replaceAnchorLinksByLanguage = (html, code) => {
   if (!matches || !supportedLanguages[code]) {
     return html;
   }
-
-  matches.forEach(url => {
-    // Replace to locale url if and only if exists in whitelist
-    // and has code registered
-    if (whitelist[url] && whitelist[url][code]) {
-      html = html.replace(url, whitelist[url][code]);
-    }
-  });
 
   return html;
 };

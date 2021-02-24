@@ -1,15 +1,17 @@
 {
-  "name": "overreacted",
+  "name": "blog",
   "private": true,
-  "engines": {"node": "12.x"},
-  "description": "Overreacted",
+  "engines": {
+    "node": ">=10.x"
+  },
+  "description": "Blogs",
   "version": "1.0.0",
-  "author": "Dan Abramov <dan.abramov@me.com>",
+  "author": "Saurav M. H <sauravhiremath@gmail.com>",
   "bugs": {
-    "url": "https://github.com/gaearon/overreacted.io/issues"
+    "url": "https://github.com/sauravhiremath/blog/issues"
   },
   "dependencies": {
-    "gatsby": "^2.0.76",
+    "gatsby": "^2.32.4",
     "gatsby-plugin-catch-links": "^2.0.9",
     "gatsby-plugin-ebook": "^1.0.2",
     "gatsby-plugin-feed": "^2.0.8",
@@ -48,7 +50,7 @@
     "glob": "^7.1.3",
     "prettier": "^1.14.2"
   },
-  "homepage": "https://overreacted.io",
+  "homepage": "https://blog.sauravmh.com",
   "license": "MIT",
   "scripts": {
     "dev": "gatsby develop",
@@ -59,8 +61,7 @@
     "build": "rm -rf public && rm -rf .cache && gatsby build",
     "now-build": "gatsby build",
     "deploy": "yarn build && cp now.json public/ && cd public && now alias $(now) overreacted.io",
-    "dry": "yarn build && cp now.json public/ && cd public && now",
-    "js-to-jsx": "node src/utils/js-to-jsx"
+    "dry": "yarn build && cp now.json public/ && cd public && now"
   },
   "husky": {
     "hooks": {
@@ -73,7 +74,6 @@
       "git add"
     ],
     "src/pages/**/*.md": [
-      "yarn run js-to-jsx",
       "git add"
     ]
   },
