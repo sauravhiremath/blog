@@ -12,7 +12,7 @@
         },
         {
           "key": "content-security-policy-report-only",
-          "value": "frame-ancestors 'none'; block-all-mixed-content; default-src 'none'; script-src 'self' 'report-sample'; style-src 'self' 'report-sample'; object-src 'none'; frame-src 'none'; child-src 'none'; img-src 'self'; font-src 'self'; connect-src 'none'; manifest-src 'none'; base-uri 'self'; form-action 'none'; media-src 'none'; prefetch-src 'none'; worker-src 'none'; report-uri http://localhost:3006/dev/g/r/csp/efd5e16b-4229-479e-bafe-b36026644bf8/0/0/3?sct=1def725b-1204-4b11-a59f-d828abd7f45e&dpos=report"
+          "value": "frame-ancestors 'none'; block-all-mixed-content; default-src 'none'; script-src 'self' 'report-sample'; style-src 'self' 'report-sample'; object-src 'none'; frame-src 'none'; child-src 'none'; img-src 'self'; font-src 'self'; connect-src 'none'; manifest-src 'none'; base-uri 'self'; form-action 'none'; media-src 'none'; prefetch-src 'none'; worker-src 'none'; report-uri https://gate.rapidsec.net/g/r/csp/41a86036-e5f5-436f-b26f-7cfc40370fb9/0/0/3?sct=dd7af9a3-d8e8-4a00-8206-57910bdcaccc&dpos=report"
         }
       ]
     }
