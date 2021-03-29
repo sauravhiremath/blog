@@ -209,6 +209,12 @@ module.exports = {
         useLangKeyLayout: false,
       },
     },
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: ['263184529'],
+      },
+    },
     `gatsby-plugin-catch-links`,
   ],
 };

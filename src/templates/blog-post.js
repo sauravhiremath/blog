@@ -131,7 +131,7 @@ class BlogPostTemplate extends React.Component {
       1,
       enSlug.length - 1
     )}/index${lang === 'en' ? '' : '.' + lang}.md`;
-    const discussUrl = `${post.frontmatter.devto}#comments}`;
+    const discussUrl = `${post.frontmatter.devto}#comments`;
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
