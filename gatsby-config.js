@@ -75,7 +75,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-130227707-1`,
+        trackingId: `263184529`,
       },
     },
     {
@@ -207,12 +207,6 @@ module.exports = {
       options: {
         langKeyDefault: 'en',
         useLangKeyLayout: false,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        trackingIds: ['263184529'],
       },
     },
     `gatsby-plugin-catch-links`,
