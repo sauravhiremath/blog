@@ -133,7 +133,7 @@ So it was the end of a general contribution guide for opensource. Let's take a d
   - We found it was due to a direct reference for the object being sent to the worker thread. And even after the worker process was orphaned, it still held the object reference with it. So, we solved this by creating a deepCyclicCopy (which is a fancy way of saying we did a deep copy of an object which may or may not have cyclic references) and sent it to the worker threads again. And yes, it worked!
   - It was a one-line fix. JUST ONE LINE!
 
-  ```js
+  ```ts
   sendMessageToJest = (eventName, args) =>
     this.eventEmitter.emit(
       eventName,
