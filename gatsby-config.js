@@ -73,12 +73,6 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: `G-CYW2CL9H6B`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-feed`,
       options: {
         query: `
@@ -207,6 +201,12 @@ module.exports = {
       options: {
         langKeyDefault: 'en',
         useLangKeyLayout: false,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: [ "G-CYW2CL9H6B" ],
       },
     },
     `gatsby-plugin-catch-links`,
