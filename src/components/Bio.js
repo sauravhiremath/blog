@@ -23,8 +23,7 @@ class Bio extends React.Component {
           }}
         />
         <p style={{ maxWidth: 310 }}>
-          Blogs by <a href="https://sauravmh.com">Saurav M. H</a>. I tend to
-          forget stuff, so here it is.
+          Blogs by <a href="https://sauravmh.com">Saurav M. H</a>. Web Development · Security · DevOps
         </p>
       </div>
     );

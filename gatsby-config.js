@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: 'Blog',
+    title: 'Blogs by Saurav M. H',
     author: 'Saurav M. H',
     description:
-      'Personal blog by Saurav M. H. I tend to forget stuff, so here it is',
+      'Blogs by Saurav M. H · Web Development · Security · DevOps',
     siteUrl: 'https://blog.sauravmh.com',
     social: {
       twitter: '@sauravmh',
@@ -93,7 +93,7 @@ module.exports = {
               return allMarkdownRemark.edges.map(edge => {
                 const siteUrl = site.siteMetadata.siteUrl;
                 const postText = `
-                <div style="margin-top=55px; font-style: italic;">(This is an article posted to my blog at overreacted.io. You can read it online by <a href="${siteUrl +
+                <div style="margin-top=55px; font-style: italic;">(This is an article posted to my blog at blog.sauravmh.com. You can read it online by <a href="${siteUrl +
                   edge.node.fields.slug}">clicking here</a>.)</div>
               `;
 
@@ -179,8 +179,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Blog`,
-        short_name: `Blog`,
+        name: `Blogs by Saurav M. H`,
+        short_name: `Blogs`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#ffa7c4`,
