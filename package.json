@@ -2,9 +2,9 @@
   "name": "blog",
   "private": true,
   "engines": {
-    "node": ">=10.x"
+    "node": ">=12.x"
   },
-  "description": "Blogs",
+  "description": "Blogs by Saurav M. H",
   "version": "1.0.0",
   "author": "Saurav M. H <sauravhiremath@gmail.com>",
   "bugs": {

@@ -11,8 +11,36 @@
           "value": "public, max-age=0, must-revalidate"
         },
         {
+          "key": "content-security-policy",
+          "value": "frame-ancestors 'none'; block-all-mixed-content; default-src https://blog.sauravmh.com; script-src 'self' 'report-sample' 'unsafe-inline' https://www.google-analytics.com https://ajax.cloudflare.com https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'report-sample' 'unsafe-inline' data: https://fonts.googleapis.com; object-src 'none'; frame-src https://*.vercel.app; child-src 'none'; img-src 'self' data: https://www.google-analytics.com; font-src 'self' data:; connect-src https://vitals.vercel-analytics.com https://www.google-analytics.com https://cloudflareinsights.com/cdn-cgi/rum https://blog.sauravmh.com/page-data/ https://*.vercel.app; manifest-src https://*.vercel.app https://blog.sauravmh.com/manifest.webmanifest; base-uri 'self'; form-action https://app.convertkit.com https://blog.sauravmh.com; media-src 'none'; prefetch-src 'none'; worker-src 'none'; report-uri https://gate.rapidsec.net/g/r/csp/41a86036-e5f5-436f-b26f-7cfc40370fb9/0/5/3?sct=dd7af9a3-d8e8-4a00-8206-57910bdcaccc&dpos=enforce"
+        },
+        {
           "key": "content-security-policy-report-only",
-          "value": "frame-ancestors 'none'; block-all-mixed-content; default-src 'none'; script-src 'self' 'unsafe-inline' 'report-sample' https://ajax.cloudflare.com/ https://www.google-analytics.com/; style-src 'self' 'unsafe-inline' 'report-sample' data: https://fonts.googleapis.com/; object-src 'none'; frame-src https://*.vercel.app/; child-src 'none'; img-src 'self' data:; font-src 'self' data:; connect-src https://www.google-analytics.com/ https://vitals.vercel-analytics.com/ https://*.vercel.app/ https://*.sauravmh.com/; manifest-src https://*.vercel.app/ https://*.sauravmh.com/; base-uri 'self'; form-action 'none'; media-src 'none'; prefetch-src 'none'; worker-src 'none'; report-uri https://gate.rapidsec.net/g/r/csp/41a86036-e5f5-436f-b26f-7cfc40370fb9/0/2/3?sct=dd7af9a3-d8e8-4a00-8206-57910bdcaccc&dpos=report"
+          "value": "frame-ancestors 'none'; block-all-mixed-content; default-src https://blog.sauravmh.com; script-src 'self' 'report-sample' 'unsafe-inline' https://www.google-analytics.com https://ajax.cloudflare.com https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'report-sample' 'unsafe-inline' data: https://fonts.googleapis.com; object-src 'none'; frame-src https://*.vercel.app; child-src 'none'; img-src 'self' data: https://www.google-analytics.com; font-src 'self' data:; connect-src https://vitals.vercel-analytics.com https://www.google-analytics.com https://cloudflareinsights.com/cdn-cgi/rum https://blog.sauravmh.com/page-data/ https://*.vercel.app; manifest-src https://*.vercel.app https://blog.sauravmh.com/manifest.webmanifest; base-uri 'self'; form-action https://app.convertkit.com https://blog.sauravmh.com; media-src 'none'; prefetch-src 'none'; worker-src 'none'; report-uri https://gate.rapidsec.net/g/r/csp/41a86036-e5f5-436f-b26f-7cfc40370fb9/0/5/3?sct=dd7af9a3-d8e8-4a00-8206-57910bdcaccc&dpos=report"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "deny"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "strict-transport-security",
+          "value": "max-age=15768000"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "picture-in-picture=(self), geolocation=*"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://blog.sauravmh.com"
         }
       ]
     }

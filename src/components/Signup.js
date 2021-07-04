@@ -8,7 +8,7 @@ class Signup extends React.Component {
   render() {
     let form = {
       id: SAURAV_BLOG_FORM_ID,
-      title: 'Learn to use JS the right way',
+      title: 'Advanced Web Development and DevOps simplified',
       subTitle:
         'Get to know interesting techniques and projects for JS, Nodejs and React',
       buttonText: 'Start Learning',

@@ -56,6 +56,9 @@ export default class HTML extends React.Component {
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}
+          {/* <!-- Cloudflare Web Analytics --> */}
+          <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e7b7841a1f874538918232e82f7a824a"}'></script>
+          {/* <!-- End Cloudflare Web Analytics --> */}
         </body>
       </html>
     );
