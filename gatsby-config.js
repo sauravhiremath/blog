@@ -2,8 +2,7 @@ module.exports = {
   siteMetadata: {
     title: 'Blogs by Saurav M. H',
     author: 'Saurav M. H',
-    description:
-      'Blogs by Saurav M. H · Web Development · Security · DevOps',
+    description: 'Blogs by Saurav M. H · Web Development · Security · DevOps',
     siteUrl: 'https://blog.sauravmh.com',
     social: {
       twitter: '@sauravmh',
@@ -210,5 +209,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-catch-links`,
+    `gatsby-plugin-sitemap`,
   ],
 };
