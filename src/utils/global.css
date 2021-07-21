@@ -1,5 +1,6 @@
 body {
   --pink: rgb(255, 167, 196);
+  font-size: 1.1rem;
   background-color: var(--bg);
 }
 
@@ -78,7 +79,7 @@ body:lang(fa) header > h1 {
 /* styles for Arabic language */
 body:lang(ar) article,
 body:lang(ar) header > h1 {
-  font-family: 'Cairo', sans-serif;
+  font-family: Apercu, 'Cairo', sans-serif;
 }
 
 body:lang(ko) header,
@@ -93,7 +94,8 @@ code[class*='language-'],
 pre[class*='language-'] {
   color: white;
   background: none;
-  font-family: Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace;
+  font-family: MonoLisa, Consolas, Menlo, Monaco, source-code-pro, Courier New,
+    monospace;
   font-feature-settings: normal;
   text-align: left;
   white-space: pre;

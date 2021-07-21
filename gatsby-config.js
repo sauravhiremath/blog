@@ -205,7 +205,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
-        trackingIds: ['263184529'],
+        trackingIds: ['UA-173453733-4'],
       },
     },
     `gatsby-plugin-catch-links`,
