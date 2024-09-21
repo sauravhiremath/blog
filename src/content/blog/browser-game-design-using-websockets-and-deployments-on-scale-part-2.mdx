@@ -19,7 +19,7 @@ In the last article, we talked about how to create a browser turn-based multipla
 - Introducing socket.io and handling exposed ports
 - Creation of rooms and namespaces and some user actions
 
-![Game Architecture (from the previous article)](https://miro.medium.com/v2/format:webp/1*QEqiWlUQaaJ1DsjEUhN4dA.png)
+![Game Architecture (from the previous article)](https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/flb6xynxgurtu0srt4rf)
 
 ### Let's continue from where we left
 
@@ -40,7 +40,7 @@ We will do system design for generic turn-based games here. Let's proceed with s
 This can be your welcome page. In my case, I have added one previous page reading the username/alias. Here we explain the users the rules of the game and show users a clear option to join or create a new room for them to play.
 
 ### Client Side
-![Room creation page](https://dev-to-uploads.s3.amazonaws.com/i/sst8zicg480mbbo3w88w.png)
+![Room creation page](https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/tqtda2v54irgacpye1vs)
 
 ### Behind the Scenes
 
@@ -73,7 +73,7 @@ We just can't start the game when a selected number of users join the game. User
 
 ### Client Side
 
-![Pre-game Lobby](https://dev-to-uploads.s3.amazonaws.com/i/h96n1ki8yxotxfvddp9b.png)
+![Pre-game Lobby](https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/zrcrocjp8p4sfod7sjtg)
 
 ### Behind the Scenes
 
@@ -109,7 +109,7 @@ For our case we need to:
 
 ## CI/CD for React Application
 
-![Add your GitHub URL and click to deploy](https://dev-to-uploads.s3.amazonaws.com/i/6oi729imfav7b1xi920k.png)
+![Add your GitHub URL and click to deploy](https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/d2vxokiegtyguo9zvksr)
 
 This is the easiest deployment stage of the pipeline. You can use Vercel/Netlify or other free (_I do mean generously free!_) auto build and deploy tools. You just need to add your GitHub project URL on the Vercel dashboard and click deploy (_yes indeed very easy_).
 
@@ -130,7 +130,7 @@ But, for our use case, we will be using Nginx as reverse-proxy. Before you ask,
 
 > <center>A reverse proxy is a server that sits in front of one or more web servers, intercepting requests from clients.</center>
 > 
-> ![reverse-proxy-flow](https://dev-to-uploads.s3.amazonaws.com/i/8vo5u7nyvhy1yrg1r7gb.png)
+> ![reverse-proxy-flow](https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/bzorwb2bedzgy4lzcqo7)
  
 ## Creating Virtual Hosts
 
@@ -215,7 +215,7 @@ There are basically two kinds of scaling
 
 We will be focusing more on horizontal scaling here. More specifically, focusing on scaling NodeJS applications. Even though some methods can be used for scaling other than NodeJS, details for other platform applications are out of the scope of this article.
 
-![Network Balancing Overview](https://dev-to-uploads.s3.amazonaws.com/i/efa3iatf1ntsq6mb2er4.png)
+![Network Balancing Overview](https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/u62d9n59sbeayzjbztmk)
 
 ### When do I scale?
 
@@ -235,7 +235,7 @@ As mentioned, you can use the `node cluster` module. But in this example, we wil
 
 > PM2 is a daemon process manager that will help you manage and keep your application online
 
-![My pm2 monitoring on server](https://dev-to-uploads.s3.amazonaws.com/i/cdnox8319gdtyjms26sz.png)
+![My pm2 monitoring on server](https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/f252b8wt2e2m3r3wuacz)
 
 Apart from being an excellent monitoring tool for your server jobs, there are various abstractions pm2 provides which makes it the go-to manager for deployments.
 It also includes `cluster mode`, which is a clean abstraction built over the `node-cluster` module.
