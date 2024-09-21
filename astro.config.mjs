@@ -18,7 +18,7 @@ export default defineConfig({
     mdx({
       syntaxHighlight: "shiki",
       shikiConfig: {
-        theme: "github-light",
+        theme: "github-light-high-contrast",
       },
       remarkPlugins: [remarkMath],
       rehypePlugins: [rehypeKatex],

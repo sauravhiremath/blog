@@ -4,6 +4,9 @@ body {
   height: 100vh;
   content-visibility: auto;
   -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  @screen md { font-size: 16px; }
+  @screen lg { font-size: 18px; }
 }
 
 *:focus-visible {
@@ -11,13 +14,13 @@ body {
 }
 
 code {
-  @apply text-sm font-mono text-purple-700 font-medium;
+  @apply text-sm font-mono text-purple-700 bg-zinc-100 px-1 py-0.5 rounded;
 }
 
 pre.astro-code {
-  @apply px-4 py-3 rounded-lg text-xl !bg-zinc-50/60 leading-6 overflow-x-scroll;
+  @apply px-4 py-3 rounded-lg text-xl !bg-zinc-100 leading-6 overflow-x-scroll;
 }
 
 svg.rough-annotation {
-  opacity: 70%;
+  opacity: 40%;
 }

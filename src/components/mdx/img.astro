@@ -4,7 +4,7 @@ const props = Astro.props;
 
 <div {...props} class="flex flex-col gap-2 text-center">
   <img
-    class="w-full rounded-lg overflow-clip"
+    class="md:h-[400px] w-auto rounded-lg object-contain"
     src={props.src ? `${props.src}?w=1024&q=70` : ""}
     alt={props.alt ?? ""}
   />
