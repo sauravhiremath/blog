@@ -1,5 +1,5 @@
 ---
-import { SITE_DESCRIPTION, SITE_TITLE } from "../config";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_COVER } from "../config";
 import Footer from "./footer.astro";
 import Header from "./header.astro";
 import Meta from "./meta.astro";
@@ -16,7 +16,7 @@ const { title, description, cover } = Astro.props;
 <!doctype html>
 <html lang="en" class="font-serif text-zinc-800">
   <head>
-    <Meta title={title ? `${title} · ${SITE_TITLE}` : SITE_TITLE} description={description ?? SITE_DESCRIPTION} cover={cover ?? ""} />
+    <Meta title={title ? `${title} · ${SITE_TITLE}` : SITE_TITLE} description={description ?? SITE_DESCRIPTION} cover={cover ?? SITE_COVER} />
   </head>
   <body>
     <div id="layout" class="flex flex-col h-full mb-8 overflow-y-scroll antialiased">

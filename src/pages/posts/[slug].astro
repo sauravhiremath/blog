@@ -22,7 +22,7 @@ type Props = {
 const { post } = Astro.props;
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={post.data.title} description={post.data.description} cover={post.data.cover}>
   <div class="flex flex-col gap-8 md:w-5/6 px-4 py-12 sm:px-8 mx-auto">
     <div class="flex flex-col gap-6 items-center justify-center max-w-screen-md mx-auto">
       <h1 id="header" class="text-5xl text-center font-title font-black">{post.data.title}</h1>

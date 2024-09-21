@@ -3,6 +3,7 @@ export const SITE_LOGO = "/avatar.png";
 export const SITE_TITLE = "Saurav Blogs";
 export const SITE_DESCRIPTION =
   "Blogs by Saurav M. H · Web Development · Security · DevOps";
+export const SITE_COVER = "https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/qsoi8bcnjlepnufdjisr";
 
 export const MENUS = [
   {
