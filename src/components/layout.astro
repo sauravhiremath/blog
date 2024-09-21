@@ -7,15 +7,16 @@ import Meta from "./meta.astro";
 type Props = {
   title?: string;
   description?: string;
+  cover?: string;
 };
 
-const { title, description } = Astro.props;
+const { title, description, cover } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="font-serif text-zinc-800">
   <head>
-    <Meta title={title ? `${title} · ${SITE_TITLE}` : SITE_TITLE} description={description ?? SITE_DESCRIPTION} />
+    <Meta title={title ? `${title} · ${SITE_TITLE}` : SITE_TITLE} description={description ?? SITE_DESCRIPTION} cover={cover ?? ""} />
   </head>
   <body>
     <div id="layout" class="flex flex-col h-full mb-8 overflow-y-scroll antialiased">
