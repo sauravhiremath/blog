@@ -1,0 +1,141 @@
+---
+title: "Debugging CGo Parse Error in Go Build Process - macOS ARM64"
+description: "A journey on resolving CGo parse errors in Go build processes on macOS ARM64 architecture."
+date: "2024-10-20"
+tags: ["go", "MacOS", "arm64"]
+cover: "https://res.cloudinary.com/sauravmh/image/upload/f_auto,q_auto/v1/blog-images/2022/01/i60sddjmk14hfpq4yvq4"
+---
+
+## Problem Description
+
+When attempting to build a Go project (using [gopy](https://github.com/go-python/gopy)) with dynamically linked libraries using the following command:
+
+```bash
+go build -mod=mod -buildmode=c-shared -ldflags=-s -w -extldflags='-lresolv' -o orcalogparser_go.so .
+```
+
+The following error was encountered:
+
+```bash
+cgo: cannot parse $WORK/b001/_cgo_.o as ELF, Mach-O, PE or XCOFF
+```
+
+<Notation type="box" color="red">
+This error occurred in a CI environment using darwin (macOS) and ARM64 architecture, despite the build process working correctly on a local macOS ARM64 system.
+</Notation>
+
+## Troubleshooting Steps 
+
+1. **Verified Go Version**: Ensured that the Go version in the CI environment matched the local development environment.
+3. **Checked for Cross-Compilation Issues**: Investigated potential discrepancies between the build environment and the target platform.
+4. **Investigate Gopy**: Forked gopy project and enabled verbose logging and flag changes to see if it compiles.
+5. **Reviewed Environment Variables**: Examined `GOOS` and `GOARCH` settings to ensure they matched the target platform.
+6. **Review xcode**: Examined if `xcode-select` (xcode tools) were installed properly and path was set. Verified if `clang` is working as expected
+7. **Verified Dependencies**: Confirmed that all required dependencies, including the `resolv` library, were available in the CI environment.
+    <br />
+    Apparently starting Go1.20 - the macOS link of go c-archive requires `lresolv` to be specified. More info [here](https://github.com/golang/go/issues/58159)
+    <br />
+    It's also confusing where exactly to specify this ([ref](https://pkg.go.dev/cmd/link)) - as it needs to be specified inside external flags `-extldflags`  which should come under `-ldflags` 
+    <br />
+    Example usage:
+    ```bash
+    go build -trimpath -buildmode=c-archive -ldflags '-w -s -extldflags "-lresolv"'
+    ```
+    <br />
+8. **Attempted Clean Build**: Tried cleaning the build cache and rebuilding:
+    ```bash
+    go clean -cache -modcache -i -r
+    ```
+    <br />
+9. **Used Verbose Output**: Ran the build command with the `-x` flag for more detailed output:
+    ```bash
+    go build -x -mod=mod -buildmode=c-shared -ldflags="-s -w" -extldflags="-lresolv" -o orcalogparser_go.so .
+    ```
+    <br />
+10. **Check python sysconfig**: Python header files when installed on a system have flags set to determine the build architecture and compilations like `shflags`, `shlinks`. 
+    <br />
+    Example from my local system:
+
+    ```bash
+    {"version": 3, "minor": 11, "incdir": "/opt/homebrew/opt/python@3.11/Frameworks/Python.framework/Versions/3.11/include/python3.11", "libdir": "/opt/homebrew/opt/python@3.11/Frameworks/Python.framework/Versions/3.11/lib", "libpy": "libpython3.11.a", "shlibs": "-ldl  -framework CoreFoundation", "syslibs": "", "shlinks": "-Wl,-stack_size,1000000  -framework CoreFoundation /opt/homebrew/opt/python@3.11/Frameworks/Python.framework/Versions/3.11/Python", "shflags": " -undefined dynamic_lookup -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk", "extsuffix": ".cpython-311-darwin.so"}
+    ```
+    <br />
+    To log the values like above, use:
+    ```bash
+    echo "$(python -c "import sysconfig; print('\n'.join([f'{k}={v}' for k,v in sysconfig.get_config_vars().items()]))")"
+    ```
+    <br />
+11. **Error with invalid flag in CGo**
+    ```bash
+    invalid flag in #cgo LDFLAGS: -Wl,--rpath=/opt/hostedtoolcache/Python/3.11.10/x64/lib
+    ```
+    <br />
+    Was resolved using `CGO_LDFLAGS_ALLOW` flag which takes in a regex. Apparently from `go1.10` ([ref](https://go.dev/wiki/InvalidFlag)) - a safelist of linker/compile options were introduced during `go get, build, etc`. 
+    <br />
+    Thus when CGo wants to pass any other option - we need to specify a regex to whitelist it.
+    <br />
+    Example usage:
+    ```bash
+    CGO_LDFLAGS_ALLOW='\-undefined|dynamic_lookup|\-extldflags=.*'
+    ```
+    <br />
+12. **Investigated CI Environment Limitations**: Researched potential restrictions in the CI environment that might affect the build process.
+13. **Enabling verbose build logs** - We enabled verbose build logs (`go build -x`), which revealed the following crucial information:
+    <br />
+    ```bash
+    TERM='dumb' clang -I . -fPIC -arch arm64 -pthread -fno-caret-diagnostics -Qunused-arguments -fmessage-length=0 -ffile-prefix-map=$WORK/b001=/tmp/go-build -gno-record-gcc-switches -fno-common -o $WORK/b001/_cgo_.o $WORK/b001/_cgo_main.o $WORK/b001/_x001.o $WORK/b001/_x002.o -O2 -g -extldflags=-lresolv -undefined dynamic_lookup -arch arm64 -arch x86_64 -g
+    ```
+    <br />
+    
+    This showed conflicting architecture flags (`-arch arm64` and `-arch x86_64`) being set.
+
+## Solution 🚀
+
+The issue was resolved by setting the `ARCHFLAGS` environment variable:
+
+<Notation type="bracket" color="red">
+```bash
+export ARCHFLAGS="-arch arm64"
+```
+</Notation>
+This explicitly specified the target architecture for the build process, ensuring consistency with the local development environment (macOS ARM64). 
+
+Previously, it was attempting universal build with both `x84_64` and `arm64` set under `LDSHARED` flag.
+
+This caused the build to fail - as the binaries were built only for `arm64` and using `buildmode=c-shared`
+
+## Recommended Build Configuration
+
+For future builds, especially in CI environments, consider using the following configuration to ensure consistency:
+
+```bash
+export ARCHFLAGS="-arch arm64" export GOOS=darwin export GOARCH=arm64 go build -x -mod=mod -buildmode=c-shared -ldflags="-s -w" -o orcalogparser_go.so .
+```
+
+And if using `buildmode=c-archive` use:
+
+```bash
+export ARCHFLAGS="-arch arm64" export GOOS=darwin export GOARCH=arm64 go build -x -mod=mod -buildmode=c-shared -ldflags="-s -w" -extldflags="-lresolv" -o orcalogparser_go.so .
+```
+
+When using Github Actions use:
+
+```yaml
+name: Generate Python bindings  
+  env:  
+    CGO_ENABLED: 1  
+    GOOS: ${{ matrix.runner.os }}  
+    GOARCH: ${{ matrix.runner.arch }}  
+    ARCHFLAGS: "-arch ${{ matrix.runner.arch }}"  
+    CGO_LDFLAGS_ALLOW: '.*'
+  run: >  
+    gopy pkg ... -dynamic-link=true -symbols=false
+    github.com/orcasecurity/my-project/pkg/hello
+```
+
+Note:
+```
+I've used a relaxed regex for ldflags here - ".*"
+
+You can make it more stricter, something like - "\-|dynamic_lookup|-Wl|--rpath=.*"
+```
