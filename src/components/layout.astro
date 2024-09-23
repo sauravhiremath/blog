@@ -16,6 +16,7 @@ const { title, description, cover } = Astro.props;
 <!doctype html>
 <html lang="en" class="font-serif text-zinc-800">
   <head>
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <Meta title={title ? `${title} · ${SITE_TITLE}` : SITE_TITLE} description={description ?? SITE_DESCRIPTION} cover={cover ?? SITE_COVER} />
   </head>
   <body>
